@@ -1,0 +1,38 @@
+# Isolated workspace for kekbull_governance — minimal fork of SPL Governance 3.1.2.
+# Not part of the Anchor ichor workspace (programs/kekbull_ichor).
+#
+# Upstream tag: governance-v3.1.2 (Mythic/solana-program-library).
+# Allowed program-tree drift vs upstream/: mint-validation in
+# program/src/tools/spl_token.rs + this workspace metadata. Enforced by
+# scripts/check-upstream-diff.sh.
+
+[workspace]
+members = ["program", "tools", "addin-api"]
+resolver = "2"
+
+[workspace.dependencies]
+# Exact pin: caret "2.1.7" resolves to 2.3.x which pulls blake3→constant_time_eq
+# 0.4.2 (edition2024) and breaks cargo-build-sbf's Cargo 1.84.
+solana-program = "=2.1.7"
+# Match governance-v3.1.2 lock pins so cargo-build-sbf (Cargo 1.84) never
+# resolves edition2024-only crates (toml_parser 1.1, constant_time_eq 0.4, …).
+borsh = "=1.5.3"
+spl-token-2022 = { version = "=6.0.0", features = ["no-entrypoint"] }
+spl-transfer-hook-interface = "=0.9.0"
+blake3 = "=1.5.5"
+indexmap = "=2.7.1"
+hashbrown = "=0.15.2"
+proc-macro-crate = "=3.2.0"
+toml_edit = "=0.22.22"
+
+[workspace.lints.rust.unexpected_cfgs]
+level = "warn"
+check-cfg = [
+    'cfg(target_os, values("solana"))',
+    'cfg(feature, values("frozen-abi", "no-entrypoint"))',
+]
+
+[profile.release]
+overflow-checks = true
+lto = "fat"
+codegen-units = 1

@@ -1,0 +1,49 @@
+[package]
+name = "kekbull-governance"
+version = "3.1.2"
+description = "KEKBULL fork of SPL Governance 3.1.2 — TransferFeeConfig mint CastVote/FinalizeVote fix"
+authors = ["KEKBULL"]
+license = "Apache-2.0"
+edition = "2021"
+publish = false
+
+[features]
+default = ["custom-heap"]
+custom-heap = []
+no-entrypoint = []
+test-sbf = []
+custom-panic = []
+
+[dependencies]
+arrayref = "0.3.7"
+bincode = "1.3.2"
+blake3 = { workspace = true }
+borsh = { workspace = true }
+hashbrown = { workspace = true }
+indexmap = { workspace = true }
+num-derive = "0.4"
+num-traits = "0.2"
+proc-macro-crate = { workspace = true }
+serde = "1.0.195"
+serde_derive = "1.0.103"
+solana-program = { workspace = true }
+spl-token-2022 = { workspace = true }
+spl-transfer-hook-interface = { workspace = true }
+spl-governance-tools = { version = "0.1.3", path = "../tools" }
+spl-governance-addin-api = { version = "0.1.3", path = "../addin-api" }
+thiserror = "1.0"
+toml_edit = { workspace = true }
+
+[dev-dependencies]
+# Host-test crates from upstream/program/Cargo.toml (governance-v3.1.2).
+# SBF-only upstream members (test-sdk, addin-mock, transfer-hook-example)
+# are not vendored in this isolated workspace.
+base64 = "0.21"
+proptest = "1.5"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "kekbull_governance"
+
+[lints]
+workspace = true

@@ -1,0 +1,5 @@
+target/
+**/*.so
+!upstream/program/tests/fixtures/*.so
+!program/tests/fixtures/*.so
+.anchor/

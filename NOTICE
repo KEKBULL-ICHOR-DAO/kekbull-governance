@@ -1,0 +1,22 @@
+KEKBULL governance
+Copyright 2026 KEKBULL ICHOR DAO contributors
+
+This product includes software developed as part of the Solana Program
+Library (https://github.com/solana-labs/solana-program-library), licensed
+under the Apache License, Version 2.0.
+
+This repository is a fork of SPL Governance, upstream tag governance-v3.1.2.
+
+Required by section 4(b) of the License. The fork changes one program file:
+
+  program/src/tools/spl_token.rs
+      assert_is_valid_spl_token_mint accepts a Token-2022 mint carrying a
+      TransferFeeConfig extension, by unpacking through
+      PodStateWithExtensions::<PodMint> before falling back to the stock
+      valid_mint_length check. Stock SPL Governance rejects such mints with
+      custom error 548 (SplTokenInvalidMintAccountData).
+
+Package renaming and workspace manifests are also changed; they are outside
+the program-source allowlist. Pristine upstream sources are vendored under
+upstream/. scripts/check-upstream-diff.sh fails if any other program/src file
+diverges.
